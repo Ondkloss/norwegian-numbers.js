@@ -66,48 +66,18 @@ function verifyOrganisationNumber(value: string) {
         return false;
     }
 }
-
-// While this could be made more dense, maybe this has some hope of being readable
 function makeMod10ControlDigit(value: string, multiplicands: Array<number>) {
-    validateInteger(value);
-    const number = parseInt(value);
-    const digits = String(number).split('');
-    let index = 0;
-    let total = 0;
-
-    for (let i = digits.length - 1; i >= 0; i--) {
-        const digit = digits[i];
-        const multiplicand = multiplicands[index % multiplicands.length];
-        const result = parseInt(digit) * multiplicand;
-        total += sumOfDigits(result);
-        index += 1;
-    }
-
-    const control = 10 - (total % 10);
+    const control = 10 - (multiplyDigitsByWeight(value, multiplicands, doNothing) % 10);
 
     if (control == 10) {
         return 0;
     }
+
     return control;
 }
 
-// While this could be made more dense, maybe this has some hope of being readable
 function makeMod11ControlDigit(value: string, multiplicands: Array<number>) {
-    validateInteger(value);
-    const number = parseInt(value);
-    const digits = String(number).split('');
-    let index = 0;
-    let total = 0;
-
-    for (let i = digits.length - 1; i >= 0; i--) {
-        const digit = digits[i];
-        const multiplicand = multiplicands[index % multiplicands.length];
-        const result = parseInt(digit) * multiplicand;
-        total += result;
-        index += 1;
-    }
-
-    const control = 11 - (total % 11);
+    const control = 11 - (multiplyDigitsByWeight(value, multiplicands, sumOfDigits) % 11);
 
     if (control == 11) {
         return 0;
@@ -116,6 +86,24 @@ function makeMod11ControlDigit(value: string, multiplicands: Array<number>) {
         return '-';
     }
     return control;
+}
+
+// While this could be made more dense, maybe this has some hope of being readable
+function multiplyDigitsByWeight(value: string, multiplicands: Array<number>, operation: (n: number) => number) {
+    const number = parseInt(value);
+    const digits = String(number).split('');
+    let index = 0;
+    let total = 0;
+
+    for (let i = digits.length - 1; i >= 0; i--) {
+        const digit = digits[i];
+        const multiplicand = multiplicands[index % multiplicands.length];
+        const result = parseInt(digit) * multiplicand;
+        total += operation(result);
+        index += 1;
+    }
+
+    return total;
 }
 
 // https://stackoverflow.com/a/10834843
@@ -141,6 +129,10 @@ function sumOfDigits(n: number) {
         n = Math.floor(n / 10);
     }
     return r;
+}
+
+function doNothing(n: number) {
+    return n;
 }
 
 export {
