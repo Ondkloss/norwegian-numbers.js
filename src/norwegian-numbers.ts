@@ -1,5 +1,6 @@
 function makeKidNumber(value: string, mode: string = 'MOD10') {
     validateLength(value, 1, 24);
+    validateInteger(value);
     if (mode.toUpperCase() === 'MOD10') {
         const controlDigit = makeMod10ControlDigit(value, [2, 1]);
         return value + String(controlDigit);
@@ -21,8 +22,11 @@ function verifyKidNumber(value: string, mode: string = 'MOD10') {
 
 function makeBirthNumber(value: string) {
     validateLength(value, 9, 9);
+    validateInteger(value);
     const firstControlDigit = makeMod11ControlDigit(value, [3, 7, 6, 1, 8, 9, 4, 5, 2]);
     const secondControlDigit = makeMod11ControlDigit(value + String(firstControlDigit), [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]);
+    validateInteger(String(firstControlDigit));
+    validateInteger(String(secondControlDigit));
     return value + String(firstControlDigit) + String(secondControlDigit)
 }
 
@@ -37,6 +41,7 @@ function verifyBirthNumber(value: string) {
 
 function makeAccountNumber(value: string) {
     validateLength(value, 10, 10);
+    validateInteger(value);
     const controlDigit = makeMod11ControlDigit(value, [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]);
     validateInteger(String(controlDigit));
     return value + String(controlDigit);
@@ -53,6 +58,7 @@ function verifyAccountNumber(value: string) {
 
 function makeOrganisationNumber(value: string) {
     validateLength(value, 8, 8);
+    validateInteger(value);
     const controlDigit = makeMod11ControlDigit(value, [3, 2, 7, 6, 5, 4, 3, 2]);
     validateInteger(String(controlDigit));
     return value + String(controlDigit);
@@ -67,7 +73,7 @@ function verifyOrganisationNumber(value: string) {
     }
 }
 function makeMod10ControlDigit(value: string, multiplicands: Array<number>) {
-    const control = 10 - (multiplyDigitsByWeight(value, multiplicands, doNothing) % 10);
+    const control = 10 - (multiplyDigitsByWeight(value, multiplicands, sumOfDigits) % 10);
 
     if (control == 10) {
         return 0;
@@ -77,7 +83,7 @@ function makeMod10ControlDigit(value: string, multiplicands: Array<number>) {
 }
 
 function makeMod11ControlDigit(value: string, multiplicands: Array<number>) {
-    const control = 11 - (multiplyDigitsByWeight(value, multiplicands, sumOfDigits) % 11);
+    const control = 11 - (multiplyDigitsByWeight(value, multiplicands, doNothing) % 11);
 
     if (control == 11) {
         return 0;
@@ -111,13 +117,13 @@ function validateInteger(value: string) {
     const result = /^[0-9]+$/.test(value);
 
     if (!result) {
-        throw new Error('Value "${value}" was not an integer.');
+        throw new Error(`Value "${value}" was not an integer.`);
     }
 }
 
 function validateLength(value: string, min: number, max: number) {
     if (value.length < min || value.length > max) {
-        throw new Error('Invalid value length for "${value}". Must be from ${min} to ${max} characters, inclusive.');
+        throw new Error(`Invalid value length for "${value}". Must be from ${min} to ${max} characters, inclusive.`);
     }
 }
 
@@ -135,7 +141,7 @@ function doNothing(n: number) {
     return n;
 }
 
-export {
+export default {
     makeKidNumber,
     verifyKidNumber,
     makeBirthNumber,
