@@ -1,0 +1,28 @@
+{
+  "name": "norwegian-numbers",
+  "version": "1.0.0",
+  "description": "Make and verify official Norwegian numbers like: KID-nummer, organisasjonsnummer, fødselsnummer, kontonummer.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ondkloss/norwegian-numbers.git"
+  },
+  "keywords": [
+    "kid-nummer",
+    "organisasjonsnummer",
+    "fødselsnummer",
+    "kontonummer"
+  ],
+  "author": "Halvor Holsten Strand",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ondkloss/norwegian-numbers/issues"
+  },
+  "homepage": "https://github.com/Ondkloss/norwegian-numbers#readme",
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
+}
