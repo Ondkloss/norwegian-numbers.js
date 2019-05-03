@@ -4,7 +4,6 @@
   "description": "Make and verify official Norwegian numbers like: KID-nummer, organisasjonsnummer, fødselsnummer, kontonummer.",
   "main": "dist/norwegian-numbers.js",
   "scripts": {
-    "install": "npm install",
     "build": "npx tsc",
     "test": "npx mocha -r ts-node/register test/*"
   },
