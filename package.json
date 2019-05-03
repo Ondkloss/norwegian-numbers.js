@@ -1,8 +1,8 @@
 {
   "name": "norwegian-numbers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Make and verify official Norwegian numbers like: KID-nummer, organisasjonsnummer, fødselsnummer, kontonummer.",
-  "main": "dist/norwegian-numbers.js",
+  "main": "src/norwegian-numbers.js",
   "scripts": {
     "build": "tsc",
     "test": "mocha -r ts-node/register test/*"
