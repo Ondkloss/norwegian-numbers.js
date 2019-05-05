@@ -3,10 +3,10 @@
 [![Build Status](https://travis-ci.com/Ondkloss/norwegian-numbers.svg?branch=master)](https://travis-ci.com/Ondkloss/norwegian-numbers)
 
 Make and verify official Norwegian numbers:
-* KID-nummer
-* Organisasjonsnummer
-* Fødselsnummer
-* Kontonummer
+* KID-nummer: `makeKidNumber` and `verifyKidNumber`
+* Organisasjonsnummer: `makeOrganisationNumber` and `verifyOrganisationNumber`
+* Fødselsnummer: `makeBirthNumber` and `verifyBirthNumber`
+* Kontonummer: `makeAccountNumber` and `verifyAccountNumber`
 
 This currently only concerns itself with the control digits.
 
