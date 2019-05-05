@@ -1,3 +1,5 @@
+const INVALID_CONTROL_DIGIT = 'Rejected due to invalid control digit.';
+
 export function makeKidNumber(value: string, mode: string = 'MOD10') {
     validateLength(value, 1, 24);
     validateInteger(value);
@@ -25,8 +27,9 @@ export function makeBirthNumber(value: string) {
     validateInteger(value);
     const firstControlDigit = makeMod11ControlDigit(value, [2, 5, 4, 9, 8, 1, 6, 7, 3]);
     const secondControlDigit = makeMod11ControlDigit(value + String(firstControlDigit), [2, 3, 4, 5, 6, 7]);
-    validateInteger(String(firstControlDigit));
-    validateInteger(String(secondControlDigit));
+    console.log(firstControlDigit, secondControlDigit);
+    validateInteger(String(firstControlDigit), INVALID_CONTROL_DIGIT);
+    validateInteger(String(secondControlDigit), INVALID_CONTROL_DIGIT);
     return value + String(firstControlDigit) + String(secondControlDigit)
 }
 
@@ -43,7 +46,7 @@ export function makeAccountNumber(value: string) {
     validateLength(value, 10, 10);
     validateInteger(value);
     const controlDigit = makeMod11ControlDigit(value, [2, 3, 4, 5, 6, 7]);
-    validateInteger(String(controlDigit));
+    validateInteger(String(controlDigit), INVALID_CONTROL_DIGIT);
     return value + String(controlDigit);
 }
 
@@ -60,7 +63,7 @@ export function makeOrganisationNumber(value: string) {
     validateLength(value, 8, 8);
     validateInteger(value);
     const controlDigit = makeMod11ControlDigit(value, [2, 3, 4, 5, 6, 7]);
-    validateInteger(String(controlDigit));
+    validateInteger(String(controlDigit), INVALID_CONTROL_DIGIT);
     return value + String(controlDigit);
 }
 
@@ -113,11 +116,11 @@ function multiplyDigitsByWeight(value: string, multiplicands: Array<number>, ope
 }
 
 // https://stackoverflow.com/a/10834843
-function validateInteger(value: string) {
+function validateInteger(value: string, errorMessage: string = `Value "${value}" was not an integer.`) {
     const result = /^[0-9]+$/.test(value);
 
     if (!result) {
-        throw new Error(`Value "${value}" was not an integer.`);
+        throw new Error(errorMessage);
     }
 }
 

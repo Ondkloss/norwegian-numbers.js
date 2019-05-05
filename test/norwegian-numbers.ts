@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import 'mocha';
-import 'rewire';
 import {
   makeKidNumber,
   verifyKidNumber,
@@ -110,6 +109,15 @@ describe('Testing of makeAccountNumber and verifyAccountNumber', function () {
       expect(verifyAccountNumber('12345678903')).to.be.true
     })
   })
+
+  context('makeAccountNumber 0000002001', function () {
+    it('should throw error', function () {
+      expect(function () {
+        makeAccountNumber('0000002001')
+      }).to.throw(Error, 'Rejected due to invalid control digit.')
+      expect(verifyAccountNumber('0000002001-')).to.be.false
+    })
+  })
 })
 
 describe('Testing of makeOrganisationNumber and verifyOrganisationNumber', function () {
@@ -119,6 +127,15 @@ describe('Testing of makeOrganisationNumber and verifyOrganisationNumber', funct
       expect(verifyOrganisationNumber('123456785')).to.be.true
     })
   })
+
+  context('makeOrganisationNumber 00002001', function () {
+    it('should throw error', function () {
+      expect(function () {
+        makeOrganisationNumber('00002001')
+      }).to.throw(Error, 'Rejected due to invalid control digit.')
+      expect(verifyOrganisationNumber('0000002001-')).to.be.false
+    })
+  })
 })
 
 describe('Testing of makeBirthNumber and verifyBirthNumber', function () {
@@ -126,6 +143,24 @@ describe('Testing of makeBirthNumber and verifyBirthNumber', function () {
     it('should return 31129956715', function () {
       expect(makeBirthNumber('311299567')).to.equal('31129956715')
       expect(verifyBirthNumber('31129956715')).to.be.true
+    })
+  })
+
+  context('makeBirthNumber 000000021', function () {
+    it('should throw error', function () {
+      expect(function () {
+        makeBirthNumber('000000021')
+      }).to.throw(Error, 'Rejected due to invalid control digit.')
+      expect(verifyBirthNumber('000000021-2')).to.be.false
+    })
+  })
+
+  context('makeBirthNumber 101000000', function () {
+    it('should throw error', function () {
+      expect(function () {
+        makeBirthNumber('101000000')
+      }).to.throw(Error, 'Rejected due to invalid control digit.')
+      expect(verifyBirthNumber('1010000002-')).to.be.false
     })
   })
 })
