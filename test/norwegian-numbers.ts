@@ -1,84 +1,131 @@
 import { expect } from 'chai';
 import 'mocha';
-import nn from '../src/norwegian-numbers';
+import 'rewire';
+import {
+  makeKidNumber,
+  verifyKidNumber,
+  makeAccountNumber,
+  verifyAccountNumber,
+  makeOrganisationNumber,
+  verifyOrganisationNumber,
+  makeBirthNumber,
+  verifyBirthNumber
+} from '../src/norwegian-numbers';
 
-describe('#mod10()', function () {
-
+describe('Testing of makeKidNumber and verifyKidNumber', function () {
   context('makeKidNumber 234567', function () {
     it('should return 2345676', function () {
-      expect(nn.makeKidNumber('234567')).to.equal('2345676')
+      expect(makeKidNumber('234567')).to.equal('2345676')
+      expect(verifyKidNumber('2345676')).to.be.true
     })
   })
 
   context('makeKidNumber 0', function () {
     it('should return 00', function () {
-      expect(nn.makeKidNumber('0')).to.equal('00')
+      expect(makeKidNumber('0')).to.equal('00')
+      expect(verifyKidNumber('00')).to.be.true
     })
   })
 
   context('makeKidNumber abc', function () {
     it('should throw error', function () {
       expect(function () {
-        nn.makeKidNumber('abc')
+        makeKidNumber('abc')
       }).to.throw(Error, 'Value "abc" was not an integer.')
+      expect(verifyKidNumber('abc')).to.be.false
     })
   })
 
   context('makeKidNumber blank', function () {
     it('should throw error', function () {
       expect(function () {
-        nn.makeKidNumber('')
+        makeKidNumber('')
       }).to.throw(Error, 'Invalid value length for "". Must be from 1 to 24 characters, inclusive.')
+      expect(verifyKidNumber('')).to.be.false
     })
   })
 
   context('makeKidNumber 01234567890123456789012345', function () {
     it('should throw error', function () {
       expect(function () {
-        nn.makeKidNumber('01234567890123456789012345')
+        makeKidNumber('01234567890123456789012345')
       }).to.throw(Error, 'Invalid value length for "01234567890123456789012345". Must be from 1 to 24 characters, inclusive.')
+      expect(verifyKidNumber('01234567890123456789012345')).to.be.false
     })
   })
 
   context('makeKidNumber (MOD11) 1234567890', function () {
     it('should return 12345678903', function () {
-      expect(nn.makeKidNumber('1234567890', 'MOD11')).to.equal('12345678903')
+      expect(makeKidNumber('1234567890', 'MOD11')).to.equal('12345678903')
+      expect(verifyKidNumber('12345678903', 'MOD11')).to.be.true
     })
   })
 
   context('makeKidNumber (MOD11) 31', function () {
     it('should return 310', function () {
-      expect(nn.makeKidNumber('31', 'MOD11')).to.equal('310')
+      expect(makeKidNumber('31', 'MOD11')).to.equal('310')
+      expect(verifyKidNumber('310', 'MOD11')).to.be.true
     })
   })
 
   context('makeKidNumber (MOD11) 40', function () {
     it('should return 40-', function () {
-      expect(nn.makeKidNumber('40', 'MOD11')).to.equal('40-')
+      expect(makeKidNumber('40', 'MOD11')).to.equal('40-')
+      expect(verifyKidNumber('40-', 'MOD11')).to.be.true
     })
   })
 
   context('makeKidNumber (MOD11) abc', function () {
     it('should throw error', function () {
       expect(function () {
-        nn.makeKidNumber('abc', 'MOD11')
+        makeKidNumber('abc', 'MOD11')
       }).to.throw(Error, 'Value "abc" was not an integer.')
+      expect(verifyKidNumber('abc', 'MOD11')).to.be.false
     })
   })
 
   context('makeKidNumber (MOD11) blank', function () {
     it('should throw error', function () {
       expect(function () {
-        nn.makeKidNumber('', 'MOD11')
+        makeKidNumber('', 'MOD11')
       }).to.throw(Error, 'Invalid value length for "". Must be from 1 to 24 characters, inclusive.')
+      expect(verifyKidNumber('', 'MOD11')).to.be.false
     })
   })
 
   context('makeKidNumber (MOD11) 01234567890123456789012345', function () {
     it('should throw error', function () {
       expect(function () {
-        nn.makeKidNumber('01234567890123456789012345', 'MOD11')
+        makeKidNumber('01234567890123456789012345', 'MOD11')
       }).to.throw(Error, 'Invalid value length for "01234567890123456789012345". Must be from 1 to 24 characters, inclusive.')
+      expect(verifyKidNumber('01234567890123456789012345', 'MOD11')).to.be.false
+    })
+  })
+})
+
+describe('Testing of makeAccountNumber and verifyAccountNumber', function () {
+  context('makeAccountNumber 1234567890', function () {
+    it('should return 12345678903', function () {
+      expect(makeAccountNumber('1234567890')).to.equal('12345678903')
+      expect(verifyAccountNumber('12345678903')).to.be.true
+    })
+  })
+})
+
+describe('Testing of makeOrganisationNumber and verifyOrganisationNumber', function () {
+  context('makeOrganisationNumber 12345678', function () {
+    it('should return 123456785', function () {
+      expect(makeOrganisationNumber('12345678')).to.equal('123456785')
+      expect(verifyOrganisationNumber('123456785')).to.be.true
+    })
+  })
+})
+
+describe('Testing of makeBirthNumber and verifyBirthNumber', function () {
+  context('makeBirthNumber 311299567', function () {
+    it('should return 31129956715', function () {
+      expect(makeBirthNumber('311299567')).to.equal('31129956715')
+      expect(verifyBirthNumber('31129956715')).to.be.true
     })
   })
 })

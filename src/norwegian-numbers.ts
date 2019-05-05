@@ -1,4 +1,4 @@
-function makeKidNumber(value: string, mode: string = 'MOD10') {
+export function makeKidNumber(value: string, mode: string = 'MOD10') {
     validateLength(value, 1, 24);
     validateInteger(value);
     if (mode.toUpperCase() === 'MOD10') {
@@ -11,7 +11,7 @@ function makeKidNumber(value: string, mode: string = 'MOD10') {
     }
 }
 
-function verifyKidNumber(value: string, mode: string = 'MOD10') {
+export function verifyKidNumber(value: string, mode: string = 'MOD10') {
     try {
         return value === makeKidNumber(value.substring(0, value.length - 1), mode);
     }
@@ -20,17 +20,17 @@ function verifyKidNumber(value: string, mode: string = 'MOD10') {
     }
 }
 
-function makeBirthNumber(value: string) {
+export function makeBirthNumber(value: string) {
     validateLength(value, 9, 9);
     validateInteger(value);
-    const firstControlDigit = makeMod11ControlDigit(value, [3, 7, 6, 1, 8, 9, 4, 5, 2]);
-    const secondControlDigit = makeMod11ControlDigit(value + String(firstControlDigit), [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]);
+    const firstControlDigit = makeMod11ControlDigit(value, [2, 5, 4, 9, 8, 1, 6, 7, 3]);
+    const secondControlDigit = makeMod11ControlDigit(value + String(firstControlDigit), [2, 3, 4, 5, 6, 7]);
     validateInteger(String(firstControlDigit));
     validateInteger(String(secondControlDigit));
     return value + String(firstControlDigit) + String(secondControlDigit)
 }
 
-function verifyBirthNumber(value: string) {
+export function verifyBirthNumber(value: string) {
     try {
         return value === makeBirthNumber(value.substring(0, value.length - 2));
     }
@@ -39,15 +39,15 @@ function verifyBirthNumber(value: string) {
     }
 }
 
-function makeAccountNumber(value: string) {
+export function makeAccountNumber(value: string) {
     validateLength(value, 10, 10);
     validateInteger(value);
-    const controlDigit = makeMod11ControlDigit(value, [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]);
+    const controlDigit = makeMod11ControlDigit(value, [2, 3, 4, 5, 6, 7]);
     validateInteger(String(controlDigit));
     return value + String(controlDigit);
 }
 
-function verifyAccountNumber(value: string) {
+export function verifyAccountNumber(value: string) {
     try {
         return value === makeAccountNumber(value.substring(0, value.length - 1));
     }
@@ -56,15 +56,15 @@ function verifyAccountNumber(value: string) {
     }
 }
 
-function makeOrganisationNumber(value: string) {
+export function makeOrganisationNumber(value: string) {
     validateLength(value, 8, 8);
     validateInteger(value);
-    const controlDigit = makeMod11ControlDigit(value, [3, 2, 7, 6, 5, 4, 3, 2]);
+    const controlDigit = makeMod11ControlDigit(value, [2, 3, 4, 5, 6, 7]);
     validateInteger(String(controlDigit));
     return value + String(controlDigit);
 }
 
-function verifyOrganisationNumber(value: string) {
+export function verifyOrganisationNumber(value: string) {
     try {
         return value === makeOrganisationNumber(value.substring(0, value.length - 1));
     }
@@ -140,14 +140,3 @@ function sumOfDigits(n: number) {
 function doNothing(n: number) {
     return n;
 }
-
-export default {
-    makeKidNumber,
-    verifyKidNumber,
-    makeBirthNumber,
-    verifyBirthNumber,
-    makeAccountNumber,
-    verifyAccountNumber,
-    makeOrganisationNumber,
-    verifyOrganisationNumber
-};

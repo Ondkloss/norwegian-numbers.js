@@ -1,3 +1,7 @@
 .vscode
 node_modules
 .travis.yml
+tsconfig.json
+src
+test
+*.ts
