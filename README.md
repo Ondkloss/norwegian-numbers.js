@@ -1,8 +1,9 @@
 # Norwegian numbers
 
-[![Build Status](https://travis-ci.com/Ondkloss/norwegian-numbers.svg?branch=master)](https://travis-ci.com/Ondkloss/norwegian-numbers)
+[![Build Status](https://travis-ci.com/Ondkloss/norwegian-numbers.js.svg?branch=master)](https://travis-ci.com/Ondkloss/norwegian-numbers.js)
 
 Make and verify official Norwegian numbers:
+
 * KID-nummer: `makeKidNumber` and `verifyKidNumber`
 * Organisasjonsnummer: `makeOrganisationNumber` and `verifyOrganisationNumber`
 * Fødselsnummer: `makeBirthNumber` and `verifyBirthNumber`
