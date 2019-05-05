@@ -27,7 +27,6 @@ export function makeBirthNumber(value: string) {
     validateInteger(value);
     const firstControlDigit = makeMod11ControlDigit(value, [2, 5, 4, 9, 8, 1, 6, 7, 3]);
     const secondControlDigit = makeMod11ControlDigit(value + String(firstControlDigit), [2, 3, 4, 5, 6, 7]);
-    console.log(firstControlDigit, secondControlDigit);
     validateInteger(String(firstControlDigit), INVALID_CONTROL_DIGIT);
     validateInteger(String(secondControlDigit), INVALID_CONTROL_DIGIT);
     return value + String(firstControlDigit) + String(secondControlDigit)
