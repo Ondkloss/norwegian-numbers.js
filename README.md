@@ -61,7 +61,7 @@ The distribution was created by the following commands:
 
 ## Changes
 
-### 1.0.6
+### 1.0.7
 
 * Added JSDoc
 

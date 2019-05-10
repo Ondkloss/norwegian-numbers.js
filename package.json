@@ -1,6 +1,6 @@
 {
   "name": "norwegian-numbers",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Make and verify official Norwegian numbers like: KID-nummer, organisasjonsnummer, fødselsnummer, kontonummer.",
   "main": "dist/norwegian-numbers.js",
   "scripts": {
