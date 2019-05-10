@@ -61,6 +61,11 @@ The distribution was created by the following commands:
 
 ## Changes
 
+### 1.0.8
+
+* Added TypeScript declaration
+* Added code coverage metrics and additional tests
+
 ### 1.0.7
 
 * Added JSDoc
