@@ -4,7 +4,7 @@ node_modules
 .travis.yml
 tsconfig.json
 coverage
+docs
 src
 test
 out
-*.ts
