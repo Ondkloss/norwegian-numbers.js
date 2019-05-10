@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: norwegian-numbers.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: norwegian-numbers.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+/**
+ * Make and verify official Norwegian numbers like:
+ * KID-nummer, organisasjonsnummer, fødselsnummer, kontonummer
+ * @module norwegian-numbers
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var INVALID_CONTROL_DIGIT = 'Rejected due to invalid control digit.';
+/**
+ * Makes a KID-number in either MOD10 or MOD11.
+ * Valid input lengths are from 1 to 24 characters, inclusive.
+ * The output length will be one character longer.
+ * @param {string} value The value to make the KID-number based on
+ * @param {string} mode MOD10 (default) or MOD11
+ * @returns {string} The resulting KID-number
+ * @throws Error If invalid length, non-integer or invalid mode
+ */
+function makeKidNumber(value, mode) {
+    if (mode === void 0) { mode = 'MOD10'; }
+    validateLength(value, 1, 24);
+    validateInteger(value);
+    if (mode.toUpperCase() === 'MOD10') {
+        var controlDigit = makeMod10ControlDigit(value);
+        return value + String(controlDigit);
+    }
+    else if (mode.toUpperCase() === 'MOD11') {
+        var controlDigit = makeMod11ControlDigit(value);
+        return value + String(controlDigit);
+    }
+    else {
+        throw Error("Invalid mode \"" + mode + "\".");
+    }
+}
+exports.makeKidNumber = makeKidNumber;
+/**
+ * Verifies a KID-number in either MOD10 or MOD11.
+ * @param {string} value The KID-number value to verify
+ * @param {string} mode MOD10 (default) or MOD11
+ * @returns {boolean} If the value is a valid KID-number or not
+ */
+function verifyKidNumber(value, mode) {
+    if (mode === void 0) { mode = 'MOD10'; }
+    try {
+        return value === makeKidNumber(value.substring(0, value.length - 1), mode);
+    }
+    catch (err) {
+        return false;
+    }
+}
+exports.verifyKidNumber = verifyKidNumber;
+/**
+ * Makes a birth number.
+ * Valid input length is 9 characters.
+ * The output length will be 11 character.
+ * @param {string} value The value to make the birth number based on
+ * @returns {string} The resulting birth number
+ * @throws Error If invalid length, non-integer or illegal control digits
+ */
+function makeBirthNumber(value) {
+    validateLength(value, 9, 9);
+    validateInteger(value);
+    var firstControlDigit = makeMod11ControlDigit(value, [2, 5, 4, 9, 8, 1, 6, 7, 3]);
+    var secondControlDigit = makeMod11ControlDigit(value + String(firstControlDigit));
+    validateInteger(String(firstControlDigit), INVALID_CONTROL_DIGIT);
+    validateInteger(String(secondControlDigit), INVALID_CONTROL_DIGIT);
+    return value + String(firstControlDigit) + String(secondControlDigit);
+}
+exports.makeBirthNumber = makeBirthNumber;
+/**
+ * Verifies a birth number.
+ * @param {string} value The birth number value to verify
+ * @returns {boolean} If the value is a valid birth number or not
+ */
+function verifyBirthNumber(value) {
+    try {
+        return value === makeBirthNumber(value.substring(0, value.length - 2));
+    }
+    catch (err) {
+        return false;
+    }
+}
+exports.verifyBirthNumber = verifyBirthNumber;
+/**
+ * Makes an account number.
+ * Valid input length is 10 characters.
+ * The output length will be 11 character.
+ * @param {string} value The value to make the account number based on
+ * @returns {string} The resulting account number
+ * @throws Error If invalid length, non-integer or illegal control digits
+ */
+function makeAccountNumber(value) {
+    validateLength(value, 10, 10);
+    validateInteger(value);
+    var controlDigit = makeMod11ControlDigit(value);
+    validateInteger(String(controlDigit), INVALID_CONTROL_DIGIT);
+    return value + String(controlDigit);
+}
+exports.makeAccountNumber = makeAccountNumber;
+/**
+ * Verifies an account number.
+ * @param {string} value The account number value to verify
+ * @returns {boolean} If the value is a valid account number or not
+ */
+function verifyAccountNumber(value) {
+    try {
+        return value === makeAccountNumber(value.substring(0, value.length - 1));
+    }
+    catch (err) {
+        return false;
+    }
+}
+exports.verifyAccountNumber = verifyAccountNumber;
+/**
+ * Makes an organisation number.
+ * Valid input length is 8 characters.
+ * The output length will be 9 character.
+ * @param {string} value The value to make the organisation number based on
+ * @returns {string} The resulting organisation number
+ * @throws Error If invalid length, non-integer or illegal control digits
+ */
+function makeOrganisationNumber(value) {
+    validateLength(value, 8, 8);
+    validateInteger(value);
+    var controlDigit = makeMod11ControlDigit(value);
+    validateInteger(String(controlDigit), INVALID_CONTROL_DIGIT);
+    return value + String(controlDigit);
+}
+exports.makeOrganisationNumber = makeOrganisationNumber;
+/**
+ * Verifies an organisation number.
+ * @param {string} value The organisation number value to verify
+ * @returns {boolean} If the value is a valid organisation number or not
+ */
+function verifyOrganisationNumber(value) {
+    try {
+        return value === makeOrganisationNumber(value.substring(0, value.length - 1));
+    }
+    catch (err) {
+        return false;
+    }
+}
+exports.verifyOrganisationNumber = verifyOrganisationNumber;
+function makeMod10ControlDigit(value, multiplicands) {
+    if (multiplicands === void 0) { multiplicands = [2, 1]; }
+    var control = 10 - (multiplyDigitsByWeight(value, multiplicands, sumOfDigits) % 10);
+    if (control == 10) {
+        return 0;
+    }
+    return control;
+}
+function makeMod11ControlDigit(value, multiplicands) {
+    if (multiplicands === void 0) { multiplicands = [2, 3, 4, 5, 6, 7]; }
+    var control = 11 - (multiplyDigitsByWeight(value, multiplicands, doNothing) % 11);
+    if (control == 11) {
+        return 0;
+    }
+    if (control == 10) {
+        return '-';
+    }
+    return control;
+}
+// While this could be made more dense, maybe this has some hope of being readable
+function multiplyDigitsByWeight(value, multiplicands, operation) {
+    var number = parseInt(value);
+    var digits = String(number).split('');
+    var index = 0;
+    var total = 0;
+    for (var i = digits.length - 1; i >= 0; i--) {
+        var digit = digits[i];
+        var multiplicand = multiplicands[index % multiplicands.length];
+        var result = parseInt(digit) * multiplicand;
+        total += operation(result);
+        index += 1;
+    }
+    return total;
+}
+// https://stackoverflow.com/a/10834843
+function validateInteger(value, errorMessage) {
+    if (errorMessage === void 0) { errorMessage = "Value \"" + value + "\" was not an integer."; }
+    var result = /^[0-9]+$/.test(value);
+    if (!result) {
+        throw new Error(errorMessage);
+    }
+}
+function validateLength(value, min, max) {
+    if (value.length &lt; min || value.length > max) {
+        throw new Error("Invalid value length for \"" + value + "\". Must be from " + min + " to " + max + " characters, inclusive.");
+    }
+}
+// https://stackoverflow.com/a/14940026
+function sumOfDigits(n) {
+    var r = 0;
+    while (n > 0) {
+        r += n % 10;
+        n = Math.floor(n / 10);
+    }
+    return r;
+}
+function doNothing(n) {
+    return n;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-norwegian-numbers.html">norwegian-numbers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.1</a> on Sat May 11 2019 00:06:07 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
