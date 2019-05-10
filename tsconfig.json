@@ -4,6 +4,7 @@
     "module": "commonjs",
     "strict": true,
     "noImplicitAny": true,
+    "declaration": true,
     "outDir": "dist",
   },
   "include": ["src/**/*"],

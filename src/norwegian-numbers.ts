@@ -13,18 +13,21 @@ const INVALID_CONTROL_DIGIT = 'Rejected due to invalid control digit.';
  * @param {string} value The value to make the KID-number based on
  * @param {string} mode MOD10 (default) or MOD11
  * @returns {string} The resulting KID-number
- * @throws Error If invalid length or non-integer
+ * @throws Error If invalid length, non-integer or invalid mode
  */
 export function makeKidNumber(value: string, mode: string = 'MOD10') {
     validateLength(value, 1, 24);
     validateInteger(value);
-    if (mode.toUpperCase() === 'MOD10') {
-        const controlDigit = makeMod10ControlDigit(value, [2, 1]);
+    if(mode.toUpperCase() === 'MOD10') {
+        const controlDigit = makeMod10ControlDigit(value);
         return value + String(controlDigit);
     }
     else if (mode.toUpperCase() === 'MOD11') {
-        const controlDigit = makeMod11ControlDigit(value, [2, 3, 4, 5, 6, 7]);
+        const controlDigit = makeMod11ControlDigit(value);
         return value + String(controlDigit);
+    }
+    else {
+        throw Error(`Invalid mode "${mode}".`);
     }
 }
 
@@ -55,7 +58,7 @@ export function makeBirthNumber(value: string) {
     validateLength(value, 9, 9);
     validateInteger(value);
     const firstControlDigit = makeMod11ControlDigit(value, [2, 5, 4, 9, 8, 1, 6, 7, 3]);
-    const secondControlDigit = makeMod11ControlDigit(value + String(firstControlDigit), [2, 3, 4, 5, 6, 7]);
+    const secondControlDigit = makeMod11ControlDigit(value + String(firstControlDigit));
     validateInteger(String(firstControlDigit), INVALID_CONTROL_DIGIT);
     validateInteger(String(secondControlDigit), INVALID_CONTROL_DIGIT);
     return value + String(firstControlDigit) + String(secondControlDigit)
@@ -86,7 +89,7 @@ export function verifyBirthNumber(value: string) {
 export function makeAccountNumber(value: string) {
     validateLength(value, 10, 10);
     validateInteger(value);
-    const controlDigit = makeMod11ControlDigit(value, [2, 3, 4, 5, 6, 7]);
+    const controlDigit = makeMod11ControlDigit(value);
     validateInteger(String(controlDigit), INVALID_CONTROL_DIGIT);
     return value + String(controlDigit);
 }
@@ -116,7 +119,7 @@ export function verifyAccountNumber(value: string) {
 export function makeOrganisationNumber(value: string) {
     validateLength(value, 8, 8);
     validateInteger(value);
-    const controlDigit = makeMod11ControlDigit(value, [2, 3, 4, 5, 6, 7]);
+    const controlDigit = makeMod11ControlDigit(value);
     validateInteger(String(controlDigit), INVALID_CONTROL_DIGIT);
     return value + String(controlDigit);
 }
@@ -134,7 +137,7 @@ export function verifyOrganisationNumber(value: string) {
         return false;
     }
 }
-function makeMod10ControlDigit(value: string, multiplicands: Array<number>) {
+function makeMod10ControlDigit(value: string, multiplicands: Array<number> = [2, 1]) {
     const control = 10 - (multiplyDigitsByWeight(value, multiplicands, sumOfDigits) % 10);
 
     if (control == 10) {
@@ -144,7 +147,7 @@ function makeMod10ControlDigit(value: string, multiplicands: Array<number>) {
     return control;
 }
 
-function makeMod11ControlDigit(value: string, multiplicands: Array<number>) {
+function makeMod11ControlDigit(value: string, multiplicands: Array<number> = [2, 3, 4, 5, 6, 7]) {
     const control = 11 - (multiplyDigitsByWeight(value, multiplicands, doNothing) % 11);
 
     if (control == 11) {

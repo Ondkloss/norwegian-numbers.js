@@ -8,7 +8,7 @@ import {
   makeOrganisationNumber,
   verifyOrganisationNumber,
   makeBirthNumber,
-  verifyBirthNumber
+  verifyBirthNumber,
 } from '../src/norwegian-numbers';
 
 describe('Testing of makeKidNumber and verifyKidNumber', function () {
@@ -88,6 +88,15 @@ describe('Testing of makeKidNumber and verifyKidNumber', function () {
       expect(function () {
         makeKidNumber('', 'MOD11')
       }).to.throw(Error, 'Invalid value length for "". Must be from 1 to 24 characters, inclusive.')
+      expect(verifyKidNumber('', 'MOD11')).to.be.false
+    })
+  })
+
+  context('makeKidNumber (WRONGMOD)', function () {
+    it('should throw error', function () {
+      expect(function () {
+        makeKidNumber('1234', 'WRONGMOD')
+      }).to.throw(Error, 'Invalid mode "WRONGMOD".')
       expect(verifyKidNumber('', 'MOD11')).to.be.false
     })
   })

@@ -1,6 +1,6 @@
 # Norwegian numbers
 
-![npm](https://img.shields.io/npm/v/norwegian-numbers.svg) [![Build Status](https://travis-ci.com/Ondkloss/norwegian-numbers.js.svg?branch=master)](https://travis-ci.com/Ondkloss/norwegian-numbers.js)
+[![npm](https://img.shields.io/npm/v/norwegian-numbers.svg)](https://www.npmjs.com/package/norwegian-numbers) [![Build Status](https://travis-ci.com/Ondkloss/norwegian-numbers.js.svg?branch=master)](https://travis-ci.com/Ondkloss/norwegian-numbers.js)
 
 Make and verify official Norwegian numbers:
 
