@@ -18,7 +18,7 @@ const INVALID_CONTROL_DIGIT = 'Rejected due to invalid control digit.';
 export function makeKidNumber(value: string, mode: string = 'MOD10') {
     validateLength(value, 1, 24);
     validateInteger(value);
-    if(mode.toUpperCase() === 'MOD10') {
+    if (mode.toUpperCase() === 'MOD10') {
         const controlDigit = makeMod10ControlDigit(value);
         return value + String(controlDigit);
     }

@@ -5,12 +5,13 @@
   "main": "dist/norwegian-numbers.js",
   "scripts": {
     "build": "tsc",
-    "test": "nyc -e .ts --reporter=lcov mocha -r ts-node/register test/*",
-    "doc": "jsdoc dist README.md"
+    "test": "nyc -e .ts --reporter=lcov --reporter=text mocha -r ts-node/register test/*",
+    "docs": "jsdoc dist README.md -d docs",
+    "coveralls": "nyc -e .ts --reporter=lcovonly mocha -r ts-node/register test/* && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ondkloss/norwegian-numbers.git"
+    "url": "git+https://github.com/Ondkloss/norwegian-numbers.js.git"
   },
   "keywords": [
     "kid-nummer",
@@ -21,13 +22,15 @@
   "author": "Halvor Holsten Strand",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Ondkloss/norwegian-numbers/issues"
+    "url": "https://github.com/Ondkloss/norwegian-numbers.js/issues"
   },
-  "homepage": "https://github.com/Ondkloss/norwegian-numbers#readme",
+  "homepage": "https://ondkloss.github.io/norwegian-numbers.js",
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
     "chai": "^4.2.0",
+    "coveralls": "^3.0.3",
+    "eslint": "^5.16.0",
     "jsdoc": "^3.6.1",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",

@@ -1,6 +1,6 @@
 # Norwegian numbers
 
-[![npm](https://img.shields.io/npm/v/norwegian-numbers.svg)](https://www.npmjs.com/package/norwegian-numbers) [![Build Status](https://travis-ci.com/Ondkloss/norwegian-numbers.js.svg?branch=master)](https://travis-ci.com/Ondkloss/norwegian-numbers.js)
+[![NPM](https://img.shields.io/npm/v/norwegian-numbers.svg)](https://www.npmjs.com/package/norwegian-numbers) [![Build Status](https://travis-ci.com/Ondkloss/norwegian-numbers.js.svg?branch=master)](https://travis-ci.com/Ondkloss/norwegian-numbers.js) [![Coverage Status](https://coveralls.io/repos/github/Ondkloss/norwegian-numbers.js/badge.svg?branch=master)](https://coveralls.io/github/Ondkloss/norwegian-numbers.js?branch=master)
 
 Make and verify official Norwegian numbers:
 
@@ -68,5 +68,6 @@ The distribution was created by the following commands:
 ## Notes
 
 Mainly made as a TypeScript NPM package test bed. Check out these packages:
+
 * [norwegian-validation](https://www.npmjs.com/package/norwegian-validation)
 * [norwegian-national-id-validator](https://www.npmjs.com/package/norwegian-national-id-validator)
