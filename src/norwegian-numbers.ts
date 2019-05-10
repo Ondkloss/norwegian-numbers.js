@@ -1,5 +1,20 @@
+/**
+ * Make and verify official Norwegian numbers like:
+ * KID-nummer, organisasjonsnummer, fødselsnummer, kontonummer
+ * @module norwegian-numbers
+ */
+
 const INVALID_CONTROL_DIGIT = 'Rejected due to invalid control digit.';
 
+/**
+ * Makes a KID-number in either MOD10 or MOD11.
+ * Valid input lengths are from 1 to 24 characters, inclusive.
+ * The output length will be one character longer.
+ * @param {string} value The value to make the KID-number based on
+ * @param {string} mode MOD10 (default) or MOD11
+ * @returns {string} The resulting KID-number
+ * @throws Error If invalid length or non-integer
+ */
 export function makeKidNumber(value: string, mode: string = 'MOD10') {
     validateLength(value, 1, 24);
     validateInteger(value);
@@ -13,6 +28,12 @@ export function makeKidNumber(value: string, mode: string = 'MOD10') {
     }
 }
 
+/**
+ * Verifies a KID-number in either MOD10 or MOD11.
+ * @param {string} value The KID-number value to verify
+ * @param {string} mode MOD10 (default) or MOD11
+ * @returns {boolean} If the value is a valid KID-number or not
+ */
 export function verifyKidNumber(value: string, mode: string = 'MOD10') {
     try {
         return value === makeKidNumber(value.substring(0, value.length - 1), mode);
@@ -22,6 +43,14 @@ export function verifyKidNumber(value: string, mode: string = 'MOD10') {
     }
 }
 
+/**
+ * Makes a birth number.
+ * Valid input length is 9 characters.
+ * The output length will be 11 character.
+ * @param {string} value The value to make the birth number based on
+ * @returns {string} The resulting birth number
+ * @throws Error If invalid length, non-integer or illegal control digits
+ */
 export function makeBirthNumber(value: string) {
     validateLength(value, 9, 9);
     validateInteger(value);
@@ -32,6 +61,11 @@ export function makeBirthNumber(value: string) {
     return value + String(firstControlDigit) + String(secondControlDigit)
 }
 
+/**
+ * Verifies a birth number.
+ * @param {string} value The birth number value to verify
+ * @returns {boolean} If the value is a valid birth number or not
+ */
 export function verifyBirthNumber(value: string) {
     try {
         return value === makeBirthNumber(value.substring(0, value.length - 2));
@@ -41,6 +75,14 @@ export function verifyBirthNumber(value: string) {
     }
 }
 
+/**
+ * Makes an account number.
+ * Valid input length is 10 characters.
+ * The output length will be 11 character.
+ * @param {string} value The value to make the account number based on
+ * @returns {string} The resulting account number
+ * @throws Error If invalid length, non-integer or illegal control digits
+ */
 export function makeAccountNumber(value: string) {
     validateLength(value, 10, 10);
     validateInteger(value);
@@ -49,6 +91,11 @@ export function makeAccountNumber(value: string) {
     return value + String(controlDigit);
 }
 
+/**
+ * Verifies an account number.
+ * @param {string} value The account number value to verify
+ * @returns {boolean} If the value is a valid account number or not
+ */
 export function verifyAccountNumber(value: string) {
     try {
         return value === makeAccountNumber(value.substring(0, value.length - 1));
@@ -58,6 +105,14 @@ export function verifyAccountNumber(value: string) {
     }
 }
 
+/**
+ * Makes an organisation number.
+ * Valid input length is 8 characters.
+ * The output length will be 9 character.
+ * @param {string} value The value to make the organisation number based on
+ * @returns {string} The resulting organisation number
+ * @throws Error If invalid length, non-integer or illegal control digits
+ */
 export function makeOrganisationNumber(value: string) {
     validateLength(value, 8, 8);
     validateInteger(value);
@@ -66,6 +121,11 @@ export function makeOrganisationNumber(value: string) {
     return value + String(controlDigit);
 }
 
+/**
+ * Verifies an organisation number.
+ * @param {string} value The organisation number value to verify
+ * @returns {boolean} If the value is a valid organisation number or not
+ */
 export function verifyOrganisationNumber(value: string) {
     try {
         return value === makeOrganisationNumber(value.substring(0, value.length - 1));
