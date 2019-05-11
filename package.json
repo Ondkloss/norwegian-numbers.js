@@ -7,6 +7,7 @@
     "build": "tsc",
     "test": "nyc -e .ts --reporter=lcov --reporter=text mocha -r ts-node/register test/*",
     "docs": "jsdoc dist README.md -d docs",
+    "dist": "npm run build && npm run test && npm run docs",
     "coveralls": "nyc -e .ts --reporter=lcovonly mocha -r ts-node/register test/* && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {

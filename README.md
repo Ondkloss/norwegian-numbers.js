@@ -1,6 +1,6 @@
 # Norwegian numbers
 
-[![NPM](https://img.shields.io/npm/v/norwegian-numbers.svg)](https://www.npmjs.com/package/norwegian-numbers) [![Build Status](https://travis-ci.com/Ondkloss/norwegian-numbers.js.svg?branch=master)](https://travis-ci.com/Ondkloss/norwegian-numbers.js) [![Coverage Status](https://coveralls.io/repos/github/Ondkloss/norwegian-numbers.js/badge.svg?branch=master)](https://coveralls.io/github/Ondkloss/norwegian-numbers.js?branch=master)
+[![NPM](https://img.shields.io/npm/v/norwegian-numbers.svg)](https://www.npmjs.com/package/norwegian-numbers) [![Build Status](https://travis-ci.com/Ondkloss/norwegian-numbers.js.svg?branch=master)](https://travis-ci.com/Ondkloss/norwegian-numbers.js) [![Coverage Status](https://coveralls.io/repos/github/Ondkloss/norwegian-numbers.js/badge.svg?branch=master)](https://coveralls.io/github/Ondkloss/norwegian-numbers.js?branch=master) [![License](https://img.shields.io/npm/l/norwegian-numbers.svg)](https://github.com/Ondkloss/norwegian-numbers.js/blob/master/LICENSE)
 
 Make and verify official Norwegian numbers:
 

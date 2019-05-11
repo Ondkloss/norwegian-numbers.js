@@ -4,6 +4,7 @@
     "module": "commonjs",
     "strict": true,
     "noImplicitAny": true,
+    "strictNullChecks": true,
     "declaration": true,
     "outDir": "dist",
     "esModuleInterop": true,
